@@ -6,11 +6,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-beforeEach(function() {
+beforeEach(function () {
     Model::factory()->count(10)->create();
 });
 
-it('has many settings', function() {
+it('has many settings', function () {
     $settings = Setting::all();
     $this->assertNotEmpty($settings);
     $this->assertGreaterThanOrEqual(1, count($settings));
@@ -19,7 +19,7 @@ it('has many settings', function() {
     $this->assertNotNull($settings->first());
 });
 
-it('can return a setting', function() {
+it('can return a setting', function () {
     $setting = Setting::get('simple.setting');
     $this->assertFalse($setting);
 
@@ -29,7 +29,7 @@ it('can return a setting', function() {
     $this->assertEquals(1, $setting->value);
 });
 
-it('can return a setting value', function() {
+it('can return a setting value', function () {
     $setting = Setting::getValue('simple.setting.value');
     $this->assertNull($setting);
     $setting = Setting::getValue('simple.setting.value', 1);

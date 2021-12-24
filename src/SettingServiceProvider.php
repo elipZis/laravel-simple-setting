@@ -13,13 +13,14 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
  * This class is a Package Service Provider
  * More info: https://github.com/spatie/laravel-package-tools
  */
-class SettingServiceProvider extends PackageServiceProvider {
-
+class SettingServiceProvider extends PackageServiceProvider
+{
     /**
      * @param Package $package
      * @return void
      */
-    public function configurePackage(Package $package): void {
+    public function configurePackage(Package $package): void
+    {
         $package
             ->name('laravel-simple-setting')
             ->hasConfigFile()
@@ -31,8 +32,9 @@ class SettingServiceProvider extends PackageServiceProvider {
     /**
      * @return void
      */
-    public function packageRegistered(): void {
-        $this->app->singleton(SettingRepository::class, fn() => new SettingRepository());
+    public function packageRegistered(): void
+    {
+        $this->app->singleton(SettingRepository::class, fn () => new SettingRepository());
         $this->app->bind('simple-setting', SettingRepository::class);
     }
 }

@@ -15,8 +15,8 @@ use JsonException;
 /**
  * The handler between facade and repository, where the settings are stored
  */
-class SettingRepository {
-
+class SettingRepository
+{
     /**
      * Save the given data to a json config file on a configured disc
      *
@@ -24,7 +24,8 @@ class SettingRepository {
      * @param mixed  $data
      * @throws JsonException
      */
-    public function storeConfig(string $filename, $data) {
+    public function storeConfig(string $filename, $data)
+    {
         Storage::disk(config('simple-setting.sync.disc'))->put(
             $filename,
             json_encode($data, JSON_THROW_ON_ERROR),
@@ -37,9 +38,10 @@ class SettingRepository {
      *
      * @return mixed[string]
      */
-    public function all() {
-        return $this->remember('ALL', static function() {
-            return Setting::query()->get(['key', 'value', 'type'])->keyBy('key')->map(static function($item) {
+    public function all()
+    {
+        return $this->remember('ALL', static function () {
+            return Setting::query()->get(['key', 'value', 'type'])->keyBy('key')->map(static function ($item) {
                 return $item['value'];
             });
         });
@@ -51,7 +53,8 @@ class SettingRepository {
      * @param string $key
      * @return mixed
      */
-    public function get(string $key) {
+    public function get(string $key)
+    {
         return $this->getSetting($key);
     }
 
@@ -61,8 +64,9 @@ class SettingRepository {
      * @param string $key
      * @return mixed
      */
-    public function getSetting(string $key) {
-        return $this->remember($key, static function() use ($key) {
+    public function getSetting(string $key)
+    {
+        return $this->remember($key, static function () use ($key) {
             return Setting::query()->key($key)->first() ?? false;
         });
     }
@@ -75,16 +79,18 @@ class SettingRepository {
      * @param mixed|null $devValue
      * @return mixed
      */
-    public function getValue(string $key, mixed $default = null, mixed $devValue = null) {
+    public function getValue(string $key, mixed $default = null, mixed $devValue = null)
+    {
         //For testing purposes, allow to pass a dev value, returned in local dev environments
-        if($devValue && App::environment(['local', 'development', 'dev'])) {
+        if ($devValue && App::environment(['local', 'development', 'dev'])) {
             return $devValue;
         }
 
         $setting = $this->getSetting($key);
-        if($setting) {
+        if ($setting) {
             return $setting->value;
         }
+
         return $default;
     }
 
@@ -96,17 +102,19 @@ class SettingRepository {
      * @param string|null $type  The forced value type, or the type will be derived
      * @return Setting
      */
-    public function set(string $key, mixed $value, string $type = null): Setting {
+    public function set(string $key, mixed $value, string $type = null): Setting
+    {
         //Before updating, forget the history
         Cache::forget(static::getCacheKey($key));
         Cache::forget(static::getCacheKey('ALL'));
 
         $setting = Setting::firstOrNew([
-            'key' => $key
+            'key' => $key,
         ]);
         $setting->type = $type ?? Setting::getType($value);
         $setting->value = $value;
         $setting->save();
+
         return $setting;
     }
 
@@ -115,7 +123,8 @@ class SettingRepository {
      * @param Closure $func
      * @return mixed
      */
-    protected function remember(string $cacheKey, Closure $func) {
+    protected function remember(string $cacheKey, Closure $func)
+    {
         //Remember, remember, the closure you're given...
         return Cache::remember(static::getCacheKey($cacheKey), config('simple-setting.cache.ttl'), $func);
     }
@@ -124,14 +133,16 @@ class SettingRepository {
      * @param string $key
      * @return string
      */
-    public static function getCacheKey(string $key) {
+    public static function getCacheKey(string $key)
+    {
         return static::getCachePrefix() . '_' . $key;
     }
 
     /**
      * @return Repository|Application|mixed
      */
-    public static function getCachePrefix() {
+    public static function getCachePrefix()
+    {
         return config('simple-setting.cache.prefix');
     }
 }

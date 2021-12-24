@@ -1,6 +1,6 @@
 # Contributing
 
-Contributions are **welcome** and will be fully **credited**.
+Contributions are **welcome**.
 
 Please read and understand the contribution guide before creating an issue or pull request.
 

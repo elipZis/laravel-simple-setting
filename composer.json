@@ -1,17 +1,18 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "elipzis/laravel-simple-setting",
+    "description": "Simple general purpose typed settings for your app",
     "keywords": [
-        ":vendor_name",
+        "elipZis",
         "laravel",
-        ":package_slug"
+        "settings",
+        "config"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/elipzis/laravel-simple-setting",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "elipZis GmbH",
+            "email": "contact@elipzis.com",
             "role": "Developer"
         }
     ],
@@ -34,13 +35,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "ElipZis\\Setting\\": "src",
+            "ElipZis\\Setting\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "ElipZis\\Setting\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -49,15 +50,19 @@
         "test-coverage": "vendor/bin/pest coverage"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "ElipZis\\Setting\\SettingServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "Setting": "ElipZis\\Setting\\Facades\\Setting"
             }
         }
     },

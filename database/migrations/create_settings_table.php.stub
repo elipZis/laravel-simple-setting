@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+/**
+ * Create a general purpose settings table
+ */
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up() {
+        Schema::create(config('simple-setting.repository.table'), function (Blueprint $table) {
+            $table->id();
+
+            //The index key
+            $table->string('key')->unique();
+            //The value
+            $table->text('value')->nullable();
+            //The type of the value
+            $table->string('type');
+
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down() {
+        Schema::dropIfExists(config('simple-setting.repository.table'));
+    }
+};

@@ -1,70 +1,144 @@
-# :package_description
+# Simple general purpose typed settings for your Laravel app
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/:vendor_slug/:package_slug/run-tests?label=tests)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/:vendor_slug/:package_slug/Check%20&%20fix%20styling?label=code%20style)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-<!--delete-->
----
-This repo can be used to scaffold a Laravel package. Follow these steps to get started:
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/elipzis/laravel-simple-setting.svg?style=flat-square)](https://packagist.org/packages/elipzis/laravel-simple-setting)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/elipzis/laravel-simple-setting/run-tests?label=tests)](https://github.com/elipzis/laravel-simple-setting/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/elipzis/laravel-simple-setting/Check%20&%20fix%20styling?label=code%20style)](https://github.com/elipzis/laravel-simple-setting/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/elipzis/laravel-simple-setting.svg?style=flat-square)](https://packagist.org/packages/elipzis/laravel-simple-setting)
 
-1. Press the "Use template" button at the top of this repo to create a new repo with the contents of this skeleton
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files
-3. Remove this block of text.
-4. Have fun creating your package.
-5. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-<!--/delete-->
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Setup and reuse typed and cached settings in your Laravel app, from numbers over dates to array.
 
-## Support us
+Create any setting you like
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
+```php
+Setting::create([
+    'key'   => 'setting.example.int',
+    'type'  => 'integer',
+    'value' => 336,
+]);
+```
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
+and get it back, anywhere in your app
 
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+```php
+$example = Setting::getValue('setting.example.int');
+```
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
+composer require elipzis/laravel-simple-setting
 ```
 
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-migrations"
+php artisan vendor:publish --tag="laravel-simple-setting-migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-config"
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag=":package_slug-views"
-```
+php artisan vendor:publish --tag="laravel-simple-setting-config"
 
 This is the contents of the published config file:
 
 ```php
-return [
-];
+    return [
+        'repository' => [
+            //The table name where to store the settings.
+            'table' => 'settings',
+            //The used cache configuration
+            'cache' => [
+                'prefix' => 'settings',
+                'ttl'    => 3600
+            ]
+        ],
+    
+        'routing' => [
+            //Should routes be available to access the settings?
+            'enabled'    => true,
+            //What path prefix to be used
+            'prefix'     => 'setting',
+            //Any middleware?
+            'middleware' => [],
+        ],
+    
+        'sync' => [
+            //Where to statically sync the settings to
+            'disc'     => env('FILESYSTEM_DRIVER', 'local'),
+            //The filename to write to
+            'filename' => 'settings.json',
+            //Whether to automatically (re-)sync the settings to the disc with every change
+            'auto'     => true
+        ]
+    ];
 ```
 
 ## Usage
 
+Creation and retrieval depend on your needs. But the following types can be used:
+
 ```php
-$skeleton = new VendorName\Skeleton();
-echo $skeleton->echoPhrase('Hello, VendorName!');
+Setting::create([
+    'key'   => 'setting.example.int',
+    'type'  => 'integer',
+    'value' => 336,
+]);
 ```
+
+```php
+$now = Carbon::now();
+Setting::create([
+    'key'   => 'setting.example.datetime',
+    'type'  => 'datetime', //or date
+    'value' => $now->addWeeks(2),
+]);
+```
+
+```php
+Setting::create([
+    'key'   => 'setting.example.bool',
+    'type'  => 'boolean',
+    'value' => false
+]);
+```
+
+```php
+Setting::create([
+    'key'   => 'setting.example.array',
+    'type'  => 'array',
+    'value' => [
+        'exampleA' => 'A',
+        'exampleB' => 'B',
+        'exampleC' => 'C',
+    ]
+]);
+```
+
+```php
+Setting::create([
+    'key'   => 'setting.example.string',
+    'type'  => 'string',
+    'value' => '((x^0.5)/0.9)+10'
+]);
+```
+
+### Controller
+
+If you have routing activated, you may access the settings via routes, e.g. `GET https://yourdomain.tld/setting/{setting}` to get a setting by key.
+
+### Command
+
+Settings can/will be (re-)synced to your locally configured disc for static access. You can resync these by calling the command
+
+```php
+php artisan setting:sync
+```
+
+All settings will be exported to a json file to the configured disc.
 
 ## Testing
 
@@ -82,12 +156,13 @@ Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
 
 ## Security Vulnerabilities
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+Please review [our security policy](.github/SECURITY.md) on how to report security vulnerabilities.
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
-- [All Contributors](../../contributors)
+- [elipZis GmbH](https://elipZis.com)
+- [NeA](https://github.com/nea)
+- [All Contributors](https://github.com/elipZis/laravel-simple-setting/contributors)
 
 ## License
 

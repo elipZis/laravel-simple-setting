@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \ElipZis\Setting\Models\Setting|bool get(string $key)
  * @method static mixed getValue(string $key, $default = null, $devValue = null)
  * @method static \ElipZis\Setting\Models\Setting set(string $key, $value, string $type = null)
- * @method static mixed[string] all()
+ * @method static array all()
  * @method static void storeConfig(string $filename, $data)
  *
  * @see SettingRepository

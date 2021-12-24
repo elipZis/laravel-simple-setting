@@ -35,7 +35,7 @@ class Setting extends Model {
     use HasFactory, MassPrunable;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'key',
@@ -88,10 +88,10 @@ class Setting extends Model {
     /**
      * Overriding the default attribute setter, to resolve JSON/Array mismatches
      *
-     * @param $value
+     * @param mixed $value
      * @return $this|Setting
      */
-    public function setValueAttribute($value) {
+    public function setValueAttribute(mixed $value) {
         $key = 'value';
 
         // If an attribute is listed as a "date", we'll convert it from a DateTime
@@ -147,10 +147,10 @@ class Setting extends Model {
     /**
      * Trying to derive the values type by simply checking
      *
-     * @param $value
+     * @param mixed $value
      * @return string
      */
-    public static function getType($value) {
+    public static function getType(mixed $value) {
         if($value instanceof DateTime) {
             return 'datetime';
         }

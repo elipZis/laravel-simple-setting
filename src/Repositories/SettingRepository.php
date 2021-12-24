@@ -3,7 +3,7 @@
 namespace ElipZis\Setting\Repositories;
 
 use Closure;
-use Elipzis\Setting\Models\Setting;
+use ElipZis\Setting\Models\Setting;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Foundation\Application;

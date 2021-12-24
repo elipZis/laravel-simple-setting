@@ -1,6 +1,6 @@
 <?php
 
-namespace Elipzis\Setting\Database\Factories;
+namespace ElipZis\Setting\Database\Factories;
 
 use ElipZis\Setting\Models\Setting;
 use Illuminate\Database\Eloquent\Factories\Factory;

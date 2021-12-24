@@ -8,8 +8,8 @@ use Illuminate\Routing\Controller;
 /**
  * Controller-based access to our configured settings
  */
-class SettingController extends Controller {
-
+class SettingController extends Controller
+{
     /**
      * @var SettingRepository
      */
@@ -19,7 +19,8 @@ class SettingController extends Controller {
      *
      * @param SettingRepository $settingRepository
      */
-    public function __construct(SettingRepository $settingRepository) {
+    public function __construct(SettingRepository $settingRepository)
+    {
         $this->repository = $settingRepository;
     }
 
@@ -27,9 +28,10 @@ class SettingController extends Controller {
      * @param string $setting
      * @return array
      */
-    public function getSetting(string $setting) {
+    public function getSetting(string $setting)
+    {
         return [
-            'setting' => $this->repository->getSetting($setting)
+            'setting' => $this->repository->getSetting($setting),
         ];
     }
 
@@ -37,9 +39,10 @@ class SettingController extends Controller {
      * @param string $setting
      * @return array
      */
-    public function getValue(string $setting) {
+    public function getValue(string $setting)
+    {
         return [
-            'setting' => $this->repository->getValue($setting)
+            'setting' => $this->repository->getValue($setting),
         ];
     }
 }

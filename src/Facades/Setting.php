@@ -14,14 +14,15 @@ use Illuminate\Support\Facades\Facade;
  *
  * @see SettingRepository
  */
-class Setting extends Facade {
-
+class Setting extends Facade
+{
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor() {
+    protected static function getFacadeAccessor()
+    {
         return 'simple-setting';
     }
 }

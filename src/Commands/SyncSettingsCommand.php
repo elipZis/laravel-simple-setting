@@ -9,7 +9,8 @@ use Illuminate\Console\Command;
 /**
  * (Re-)Sync all settings to a disc
  */
-class SyncSettingsCommand extends Command {
+class SyncSettingsCommand extends Command
+{
     /**
      * The name and signature of the console command.
      *
@@ -28,7 +29,8 @@ class SyncSettingsCommand extends Command {
      * @param SettingRepository $settingRepository
      * @return int
      */
-    public function handle(SettingRepository $settingRepository): int {
+    public function handle(SettingRepository $settingRepository): int
+    {
         $filename = config('simple-settings.sync.filename');
         $this->info("[SyncSettings] (Re-)Syncing settings to {$filename}...");
         Setting::storeConfig($filename, $settingRepository->all());

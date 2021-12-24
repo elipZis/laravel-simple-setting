@@ -30,9 +30,10 @@ use Illuminate\Support\Str;
  * @property string $type
  * @property mixed  $value
  */
-class Setting extends Model {
-
-    use HasFactory, MassPrunable;
+class Setting extends Model
+{
+    use HasFactory;
+    use MassPrunable;
 
     /**
      * @var string[]
@@ -40,19 +41,19 @@ class Setting extends Model {
     protected $fillable = [
         'key',
         'value',
-        'type'
+        'type',
     ];
     /**
      * The possible cast types
      */
     public const TYPES = [
-        'string'   => 'Text',
-        'integer'  => 'Integer',
-        'double'   => 'Double',
-        'date'     => 'Date',
+        'string' => 'Text',
+        'integer' => 'Integer',
+        'double' => 'Double',
+        'date' => 'Date',
         'datetime' => 'DateTime',
-        'boolean'  => 'Boolean',
-        'array'    => 'JSON',
+        'boolean' => 'Boolean',
+        'array' => 'JSON',
     ];
 
     /**
@@ -62,19 +63,20 @@ class Setting extends Model {
      * @var array
      */
     protected $casts = [
-        'value' => 'string'
+        'value' => 'string',
     ];
 
     /**
      *
      */
-    protected static function boot() {
+    protected static function boot()
+    {
         parent::boot();
 
-        $func = static function(Setting $model) {
-            if(isset($model->original['value']) && $model->value !== $model->original['value']) {
+        $func = static function (Setting $model) {
+            if (isset($model->original['value']) && $model->value !== $model->original['value']) {
                 Cache::forget(SettingRepository::getCacheKey($model->key));
-                if(config('simple-setting.sync.auto')) {
+                if (config('simple-setting.sync.auto')) {
                     \ElipZis\Setting\Facades\Setting::storeConfig('settings.json', \ElipZis\Setting\Facades\Setting::all());
                 }
             }
@@ -97,12 +99,12 @@ class Setting extends Model {
         // If an attribute is listed as a "date", we'll convert it from a DateTime
         // instance into a form proper for storage on the database tables using
         // the connection grammar's date format. We will auto set the values.
-        if($value && $this->isDateAttribute($key)) {
+        if ($value && $this->isDateAttribute($key)) {
             $value = $this->fromDateTime($value);
         }
 
-        if($this->isJsonCastable($key) && !is_null($value)) {
-            if(is_string($value)) {
+        if ($this->isJsonCastable($key) && ! is_null($value)) {
+            if (is_string($value)) {
                 $value = json_decode(json_encode($value), true);
             } else {
                 $value = $this->castAttributeAsJson($key, $value);
@@ -112,7 +114,7 @@ class Setting extends Model {
         // If this attribute contains a JSON ->, we'll set the proper value in the
         // attribute's underlying array. This takes care of properly nesting an
         // attribute in the array's value in the case of deeply nested items.
-        if(Str::contains($key, '->')) {
+        if (Str::contains($key, '->')) {
             return $this->fillJsonAttribute($key, $value);
         }
 
@@ -128,10 +130,12 @@ class Setting extends Model {
      * @param string $key
      * @return mixed|string
      */
-    protected function getCastType($key) {
-        if($key === 'value' && !empty($this->type)) {
+    protected function getCastType($key)
+    {
+        if ($key === 'value' && ! empty($this->type)) {
             return $this->type;
         }
+
         return parent::getCastType($key);
     }
 
@@ -140,7 +144,8 @@ class Setting extends Model {
      * @param string  $key
      * @return Builder
      */
-    public function scopeKey(Builder $query, string $key) {
+    public function scopeKey(Builder $query, string $key)
+    {
         return $query->where('key', '=', $key);
     }
 
@@ -155,19 +160,21 @@ class Setting extends Model {
             return 'datetime';
         }
         $type = gettype($value);
-        if(isset(static::TYPES[$type])) {
+        if (isset(static::TYPES[$type])) {
             return $type;
         }
-        if($type === 'object') {
+        if ($type === 'object') {
             return 'array';
         }
+
         return 'string';
     }
 
     /**
      * @return Repository|Application|mixed|string
      */
-    public function getTable() {
+    public function getTable()
+    {
         return config('simple-setting.repository.table');
     }
 }

@@ -163,7 +163,8 @@ which returns only the value, in this case `test`.
 ### Controller
 
 If you have routing activated, you may access the settings via routes, e.g. `GET https://yourdomain.tld/setting/{setting}` to get a setting by key.
-*Note: Routes only return values and have no `setter``endpoint!*
+
+*Note: Routes only return values and have no `setter` endpoint!*
 
 ### Command
 

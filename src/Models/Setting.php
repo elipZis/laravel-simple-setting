@@ -74,15 +74,19 @@ class Setting extends Model
         parent::boot();
 
         $func = static function (Setting $model) {
+            //Forget the cached setting key, if it changed
             if (isset($model->original['value']) && $model->value !== $model->original['value']) {
                 Cache::forget(SettingRepository::getCacheKey($model->key));
-                if (config('simple-setting.sync.auto')) {
-                    \ElipZis\Setting\Facades\Setting::storeConfig('settings.json', \ElipZis\Setting\Facades\Setting::all());
-                }
+            }
+            //Forget all cached keys as something changed or was newly created
+            Cache::forget(SettingRepository::getCacheKey('ALL'));
+            if (config('simple-setting.sync.auto')) {
+                \ElipZis\Setting\Facades\Setting::storeConfig();
             }
         };
 
-        //Clear this setting from the cache if updated
+        //Clear this setting from the cache if updated and potentially store a new config version
+        self::created($func);
         self::updated($func);
         self::saved($func);
     }

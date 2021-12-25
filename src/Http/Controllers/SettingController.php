@@ -25,24 +25,40 @@ class SettingController extends Controller
     }
 
     /**
-     * @param string $setting
+     * Return all settings in key => value format
+     *
      * @return array
      */
-    public function getSetting(string $setting)
+    public function all()
     {
         return [
-            'setting' => $this->repository->getSetting($setting),
+            'settings' => $this->repository->all(),
         ];
     }
 
     /**
+     * Return the given setting keys model values
+     *
      * @param string $setting
      * @return array
      */
-    public function getValue(string $setting)
+    public function get(string $setting)
     {
         return [
-            'setting' => $this->repository->getValue($setting),
+            $setting => $this->repository->getSetting($setting),
+        ];
+    }
+
+    /**
+     * Return the given setting keys value
+     *
+     * @param string $setting
+     * @return array
+     */
+    public function value(string $setting)
+    {
+        return [
+            $setting => $this->repository->getValue($setting),
         ];
     }
 }

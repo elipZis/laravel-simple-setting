@@ -31,11 +31,15 @@ class SyncSettingsCommand extends Command
      */
     public function handle(SettingRepository $settingRepository): int
     {
-        $filename = config('simple-settings.sync.filename');
-        $this->info("[SyncSettings] (Re-)Syncing settings to {$filename}...");
-        Setting::storeConfig($filename, $settingRepository->all());
-        $this->comment("[SyncSettings] (Re-)Synced settings!");
+        $filename = config('simple-setting.sync.filename');
+        if($filename) {
+            $this->info("[SyncSimpleSetting] (Re-)Syncing settings to {$filename}...");
+            Setting::storeConfig($filename);
+            $this->comment("[SyncSimpleSetting] (Re-)Synced settings!");
+            return self::SUCCESS;
+        }
 
-        return self::SUCCESS;
+        $this->error('[SyncSimpleSetting] No filename given!');
+        return self::FAILURE;
     }
 }

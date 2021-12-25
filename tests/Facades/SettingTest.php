@@ -21,7 +21,7 @@ it('has many settings', function () {
 
 it('can return a setting', function () {
     $setting = Setting::get('simple.setting');
-    $this->assertFalse($setting);
+    $this->assertNull($setting);
 
     Setting::set('simple.setting', 1);
     $setting = Setting::get('simple.setting');

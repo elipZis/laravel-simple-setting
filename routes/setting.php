@@ -9,8 +9,9 @@ if(config('simple-setting.routing.enabled')) {
     $middleware = config('simple-setting.routing.middleware');
 
     Route::group(['prefix' => $prefix, 'middleware' => $middleware], static function() use ($prefix) {
-        Route::get('/{setting}', [SettingController::class, 'getSetting'])->name($prefix . '_get');
-        Route::get('/value/{setting}', [SettingController::class, 'getValue'])->name($prefix . '_value');
+        Route::get('/{setting}/value', [SettingController::class, 'value'])->name($prefix . '_value');
+        Route::get('/{setting}', [SettingController::class, 'get'])->name($prefix . '_get');
+        Route::get('/', [SettingController::class, 'all'])->name($prefix . '_all');
     });
 }
 

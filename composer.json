@@ -1,6 +1,6 @@
 {
     "name": "elipzis/laravel-simple-setting",
-    "description": "Simple general purpose typed settings for your app",
+    "description": "Simple key/value typed settings for your Laravel app",
     "keywords": [
         "elipZis",
         "laravel",

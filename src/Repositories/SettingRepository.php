@@ -7,6 +7,7 @@ use ElipZis\Setting\Models\Setting;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -39,7 +40,7 @@ class SettingRepository
     /**
      * Return all settings from the database, keyed by the setting key
      *
-     * @return mixed[string]
+     * @return Collection|\Illuminate\Support\Collection
      */
     public function all()
     {

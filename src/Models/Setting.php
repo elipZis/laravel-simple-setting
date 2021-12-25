@@ -97,7 +97,8 @@ class Setting extends Model
      * @param mixed $value
      * @return $this|Setting
      */
-    public function setValueAttribute(mixed $value) {
+    public function setValueAttribute(mixed $value)
+    {
         $key = 'value';
 
         // If an attribute is listed as a "date", we'll convert it from a DateTime
@@ -159,8 +160,9 @@ class Setting extends Model
      * @param mixed $value
      * @return string
      */
-    public static function getType(mixed $value) {
-        if($value instanceof DateTime) {
+    public static function getType(mixed $value)
+    {
+        if ($value instanceof DateTime) {
             return 'datetime';
         }
         $type = gettype($value);

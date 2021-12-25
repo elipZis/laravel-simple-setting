@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/elipzis/laravel-simple-setting/Check%20&%20fix%20styling?label=code%20style)](https://github.com/elipzis/laravel-simple-setting/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/elipzis/laravel-simple-setting.svg?style=flat-square)](https://packagist.org/packages/elipzis/laravel-simple-setting)
 
-Setup and reuse
+Create, store and use
 
 * key/value settings,
 * typed from numbers over dates to array,
@@ -87,8 +87,6 @@ php artisan migrate
 
 ## Usage
 
-Creation and retrieval depend on your needs.
-
 ### Creation
 
 The following types can be used:
@@ -152,15 +150,15 @@ which would return something like
 {"test":{"id":1,"key":"test","value":"test","type":"string","created_at":"2021-12-25T10:18:07.000000Z","updated_at":"2021-12-25T10:18:07.000000Z"}}
 ```
 
-Keyed by the `key`, the model is returned.
+keyed by the `key`.
 
-If you would just need the value, call
+If you just need the value, call
 
 ```php
 Setting::getValue('test');
 ```
 
-which only returns the value, in this case `test`.
+which returns only the value, in this case `test`.
 
 ### Controller
 

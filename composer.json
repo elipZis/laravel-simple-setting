@@ -13,7 +13,8 @@
         {
             "name": "elipZis GmbH",
             "email": "contact@elipzis.com",
-            "role": "Developer"
+            "role": "Developer",
+            "homepage": "https://elipZis.com"
         }
     ],
     "require": {

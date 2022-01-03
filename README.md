@@ -28,6 +28,8 @@ and get it back, anywhere in your app
 $example = Setting::getValue('setting.example.int');
 ```
 
+or access the statically created e.g. `settings.json` export to reduce Webserver load!
+
 ## Installation
 
 You can install the package via composer:
@@ -160,13 +162,11 @@ Setting::getValue('test');
 
 which returns only the value, in this case `test`.
 
-### Controller
+### Static export
 
-If you have routing activated, you may access the settings via routes, e.g. `GET https://yourdomain.tld/setting/{setting}` to get a setting by key.
+Every change/creation of a setting is automatically updating a statically exported file, by default `settings.json` on your default filesystem disc. This should ensure a reduced Webserver load for external access by e.g. your SPA frontend so that they just need to access a for example to S3 exported CDN-cached file, without "hammering" the Webserver every time.
 
-*Note: Routes only return values and have no `setter` endpoint!*
-
-### Command
+#### Command
 
 Settings can/will be (re-)synced to your disc for static access automatically, if configured. You can (re-)sync these by calling the command
 
@@ -175,6 +175,12 @@ php artisan setting:sync
 ```
 
 All settings will be exported to a json file to the configured disc.
+
+### Controller
+
+If you have routing activated, you may access the settings via routes, e.g. `GET https://yourdomain.tld/setting/{setting}` to get a setting by key.
+
+*Note: Routes only return values and have no `setter` endpoint!*
 
 ## Testing
 

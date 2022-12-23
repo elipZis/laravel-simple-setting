@@ -4,6 +4,7 @@ use ElipZis\Setting\Commands\SyncSettingsCommand;
 use ElipZis\Setting\Models\Setting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+
 use function Pest\Laravel\artisan;
 
 uses(RefreshDatabase::class);

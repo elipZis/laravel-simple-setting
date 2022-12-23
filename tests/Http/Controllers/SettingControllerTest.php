@@ -4,6 +4,7 @@ use ElipZis\Setting\Http\Controllers\SettingController;
 use ElipZis\Setting\Models\Setting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Route;
+
 use function Pest\Laravel\getJson;
 
 uses(RefreshDatabase::class);

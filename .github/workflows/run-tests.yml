@@ -12,15 +12,17 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        php: [8.1]
-        laravel: [10.*]
-        stability: [prefer-lowest, prefer-stable]
+        os: [ubuntu-latest]
+        dependency-version: [prefer-dist]
+        php: [8.2, 8.3]
+        laravel: [10.*, 11.*]
         include:
           - laravel: 10.*
-            testbench: ^8.0
+            testbench: 8.*
+          - laravel: 11.*
+            testbench: 9.*
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.os }}
 
     steps:
       - name: Checkout code
@@ -40,8 +42,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+          composer install --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
 
       - name: Execute tests
         run: vendor/bin/pest

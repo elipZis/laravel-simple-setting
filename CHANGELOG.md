@@ -2,6 +2,24 @@
 
 All notable changes to `laravel-simple-setting` will be documented in this file.
 
+## 1.3.0 - 2024-04-22
+
+Bump Laravel to 11 and PHP
+
+### What's Changed
+
+* chore(deps): Bump actions/checkout from 3.5.0 to 3.5.2 by @dependabot in https://github.com/elipZis/laravel-simple-setting/pull/17
+* chore(deps): Bump dependabot/fetch-metadata from 1.3.6 to 1.4.0 by @dependabot in https://github.com/elipZis/laravel-simple-setting/pull/18
+* chore(deps): Bump dependabot/fetch-metadata from 1.4.0 to 1.5.1 by @dependabot in https://github.com/elipZis/laravel-simple-setting/pull/19
+* chore(deps): Bump actions/checkout from 3.5.2 to 3.5.3 by @dependabot in https://github.com/elipZis/laravel-simple-setting/pull/20
+* chore(deps): Bump dependabot/fetch-metadata from 1.5.1 to 1.6.0 by @dependabot in https://github.com/elipZis/laravel-simple-setting/pull/21
+* chore(deps): Bump actions/checkout from 3.5.3 to 3.6.0 by @dependabot in https://github.com/elipZis/laravel-simple-setting/pull/22
+* chore(deps): Bump actions/checkout from 3.6.0 to 4.1.1 by @dependabot in https://github.com/elipZis/laravel-simple-setting/pull/26
+* chore(deps): Bump stefanzweifel/git-auto-commit-action from 4 to 5 by @dependabot in https://github.com/elipZis/laravel-simple-setting/pull/25
+* chore: Bump laravel and php by @nea in https://github.com/elipZis/laravel-simple-setting/pull/27
+
+**Full Changelog**: https://github.com/elipZis/laravel-simple-setting/compare/v1.2.0...v1.3.0
+
 ## 1.2.0 - 2023-03-28
 
 Bump to Laravel 10
